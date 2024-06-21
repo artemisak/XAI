@@ -2,7 +2,7 @@ import anthropic
 import ast
 from supplementary import *
 
-prompt = "You are an intelligent system that assists in scheduling surgeries in a clinic. Your task is to find the optimal days for surgeries, considering multiple factors. You will work with observation entries from agents, analyze this data, and make decisions based on it. Your role is to coordinate agents who analyze data from all other agents and make optimal decisions for scheduling surgeries."
+prompt = "You are  an intelligent system that assists in scheduling surgeries in a clinic. Your task is to find the optimal days for surgeries, considering multiple factors. You will work with observation entries from agents, analyze this data, and make decisions based on it. Your role is to coordinate agents who analyze data from all other agents and make optimal decisions for scheduling surgeries."
 scheme = "Support your understanding with a short answer. The answer should be in two parts: 1) the main idea 2) a list of important details."
 
 client = anthropic.Anthropic(
