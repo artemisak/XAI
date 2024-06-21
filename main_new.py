@@ -6,7 +6,7 @@ prompt = "You are an intelligent system that assists in scheduling surgeries in 
 scheme = "Support your understanding with a short answer. The answer should be in two parts: 1) the main idea 2) a list of important details."
 
 client = anthropic.Anthropic(
-    api_key="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",
+    api_key="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",
 )
 
 message_1 = client.messages.create(

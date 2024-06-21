@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 
 # Your Anthropic API key
-ANTHROPIC_API_KEY = "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"
+ANTHROPIC_API_KEY = "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"
 
 client = anthropic.Anthropic(api_key=ANTHROPIC_API_KEY)
 
