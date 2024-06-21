@@ -3,7 +3,7 @@ import anthropic
 import ast
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
+import os
 
 app = Flask(__name__)
 
@@ -186,5 +186,6 @@ def mask():
         'levenshtein': levenshtein
     })
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 10000)))
