@@ -6,6 +6,7 @@
     <title>Concept Masking and Similarity</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <style>
         #loadingOverlay {
             display: none;
@@ -43,6 +44,14 @@
                 </button>
             </div>
         </form>
+
+        <div id="conceptVisualization" class="mt-8 hidden">
+            <h2 class="text-2xl font-semibold mb-4 text-gray-800">Concept Impact Visualization:</h2>
+            <div class="flex flex-wrap gap-4">
+                <div id="concept_mean_plot" class="bg-white shadow-md rounded-lg overflow-hidden flex-1"></div>
+                <div id="concept_variance_plot" class="bg-white shadow-md rounded-lg overflow-hidden flex-1"></div>
+            </div>
+        </div>
 
         <div id="conceptSelection" class="mt-8 hidden">
             <h2 class="text-2xl font-semibold mb-4 text-gray-800">Select concepts to mask:</h2>
@@ -87,8 +96,24 @@
                         `);
                     });
                     conceptsWithWords = data.concepts_with_words;
-                    $('#conceptSelection').removeClass('hidden');
-                    hideLoading();
+                    
+                    // Call visualize_concepts after getting the concepts
+                    $.post('/visualize_concepts', {
+                        prompt: $('#prompt').val(),
+                        scheme: $('#scheme').val(),
+                        'concepts[]': data.concepts,
+                        concepts_with_words: JSON.stringify(conceptsWithWords)
+                    }, function(visualizeData) {
+                        // Render the horizontal bar plot
+                        Plotly.newPlot('concept_mean_plot', JSON.parse(visualizeData.concept_mean));
+                        Plotly.newPlot('concept_variance_plot', JSON.parse(visualizeData.concept_variance));
+                        $('#conceptVisualization').removeClass('hidden');
+                        $('#conceptSelection').removeClass('hidden');
+                        hideLoading();
+                    }).fail(function() {
+                        alert('An error occurred while visualizing concepts.');
+                        hideLoading();
+                    });
                 }).fail(function() {
                     alert('An error occurred while processing your request.');
                     hideLoading();
